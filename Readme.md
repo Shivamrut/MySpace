@@ -1,3 +1,3 @@
-# Simple Template for React.js only project
+# Simple Template for MERN project
 ***
 ## View branches for projects
