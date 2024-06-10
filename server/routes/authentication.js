@@ -7,38 +7,57 @@ const jwt = require("jsonwebtoken");
 
 const JWT_KEY = "MYSECRETKEY";
 
-router.post("/login", async (req, res) => {
-  let { username, password } = req.body;
+router.post(
+  "/login",
+  [
+    body("email", "Enter valid email").exists().isEmail(),
+    body("password", "Password cannot be blank").exists(),
+  ],
+  async (req, res) => {
+    const result = validationResult(req);
 
-  User.findOne({ username: username })
-    .then(async (user) => {
-      if (user) {
-        let hash = await bcrypt.compare(password, user.password);
-        if (hash) {
-          res.json({
-            success: true,
-            user: user._id,
-          });
+    if (!result.isEmpty()) {
+      return res.json({
+        success: false,
+        error: result.array().map((e) => e.msg),
+      });
+    }
+    let { email, password } = req.body;
+
+    User.findOne({ email: email })
+      .then(async (user) => {
+        if (user) {
+          let hash = await bcrypt.compare(password, user.password);
+          if (hash) {
+            const data = {
+              user: user._id,
+            };
+            const token = jwt.sign(data, JWT_KEY);
+            res.json({
+              success: true,
+              token: token,
+            });
+          } else {
+            res.json({
+              success: false,
+              user: "Password Incorrect",
+            });
+          }
         } else {
           res.json({
             success: false,
-            user: "Password Incorrect",
+            user: "User not found",
           });
         }
-      } else {
+      })
+      .catch((e) => {
         res.json({
           success: false,
-          user: "User not found",
+          error: e,
         });
-      }
-    })
-    .catch((e) => {
-      res.json({
-        success: false,
-        error: e,
       });
-    });
-});
+  }
+);
 
 router.post(
   "/signup",
@@ -69,11 +88,10 @@ router.post(
           const data = {
             user: user._id,
           };
-          const token = jwt.sign(data,JWT_KEY)
-          console.log(token);
+          const token = jwt.sign(data, JWT_KEY);
           res.json({
             success: true,
-            token : token
+            token: token,
           });
         })
         .catch((e) => {
