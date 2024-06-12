@@ -2,12 +2,17 @@ const express = require("express");
 const router = express.Router();
 const fetchuser = require("../middleware/fetchuser");
 const Notes = require("../models/Notes");
-const { validationResult, body } = require("express-validator");
+const {
+  validationResult,
+  body
+} = require("express-validator");
 
 router.get("/getAllNotes", fetchuser, async (req, res) => {
   try {
     const user = req.user;
-    const notes = await Notes.find({ user: user });
+    const notes = await Notes.find({
+      user: user
+    });
     res.json({
       success: true,
       notes: notes,
@@ -41,7 +46,9 @@ router.post(
       .escape(),
     body("description", "Description cannot be empty. Minimum 5 character")
       .notEmpty()
-      .isLength({ min: 5 })
+      .isLength({
+        min: 5
+      })
       .escape(),
     body("tag").escape(),
   ],
@@ -55,7 +62,11 @@ router.post(
           error: result.array().map((e) => e.msg),
         });
       }
-      const { title, tag, description } = req.body;
+      const {
+        title,
+        tag,
+        description
+      } = req.body;
       const user = req.user;
       const note = await Notes.create({
         user: user,
@@ -75,32 +86,82 @@ router.post(
   }
 );
 
-router.put("/updatenote/:id", fetchuser,async(req,res)=>{
-    try {
-        const {title,description,tag} = req.body
-        const data = {}
-        if(title)data.title = title 
-        if(description)data.description = description
-        if(tag)data.tag = tag 
+router.put("/updatenote/:id", fetchuser, async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      tag
+    } = req.body;
+    const data = {};
+    if (title) data.title = title;
+    if (description) data.description = description;
+    if (tag) data.tag = tag;
 
-        const user = req.user
-        const id = req.params.id
-        const note = await Notes.findById({_id:id})
-        if(!note || note.user.toString()!==req.user){
-            throw new Error("Note not found!")
-        }
-        const newNote = await Notes.findByIdAndUpdate({_id:id},{$set:data},{new:true})
-
-        res.json({
-            note : newNote
-        })
-        
-    } catch (error) {
-        res.json({
-            error: error.message,
-            errorDetails: error,
-          });
+    const user = req.user;
+    const id = req.params.id;
+    const note = await Notes.findById({
+      _id: id
+    });
+    if (!note || note.user.toString() !== user) {
+      throw new Error("Note not found!");
     }
-})
+    const newNote = await Notes.findByIdAndUpdate({
+      _id: id
+    }, {
+      $set: data
+    }, {
+      new: true
+    });
+
+    res.json({
+      note: newNote,
+    });
+  } catch (error) {
+    res.json({
+      error: error.message,
+      errorDetails: error,
+    });
+  }
+});
+
+router.delete("/deletenote/:id", fetchuser, async (req, res) => {
+  try {
+    
+    const user = req.user;
+    const id = req.params.id;
+    const note = await Notes.findById({
+      _id: id
+    });
+    if (!note || note.user.toString() !== user) {
+      throw new Error("Note not found!");
+    }
+    const result = await Notes.findByIdAndDelete({_id:id})
+    res.json({
+      res : result,
+    });
+  } catch (error) {
+    res.json({
+      error: error.message,
+      errorDetails: error,
+    });
+  }
+});
+
+router.delete("/deleteall", fetchuser, async (req, res) => {
+  try {
+    
+    const user = req.user;
+    const result = await Notes.deleteMany({user:user})
+    res.json({
+      res : result,
+    });
+  } catch (error) {
+    res.json({
+      error: error.message,
+      errorDetails: error,
+    });
+  }
+});
 
 module.exports = router;
