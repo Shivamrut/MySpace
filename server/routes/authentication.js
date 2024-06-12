@@ -15,8 +15,8 @@ router.post(
     body("password", "Password cannot be blank").exists(),
   ],
   async (req, res) => {
-    const result = validationResult(req);
 
+    const result = validationResult(req);
     if (!result.isEmpty()) {
       return res.json({
         success: false,

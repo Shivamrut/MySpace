@@ -25,16 +25,6 @@ router.get("/getAllNotes", fetchuser, async (req, res) => {
   }
 });
 
-router.get("/getNoteById", (req, res) => {
-  res.json({
-    success: true,
-    data: {
-      id: 1,
-      note: "xyz",
-    },
-  });
-});
-
 router.post(
   "/addNote",
   [
@@ -127,7 +117,7 @@ router.put("/updatenote/:id", fetchuser, async (req, res) => {
 
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
-    
+
     const user = req.user;
     const id = req.params.id;
     const note = await Notes.findById({
@@ -136,9 +126,9 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
     if (!note || note.user.toString() !== user) {
       throw new Error("Note not found!");
     }
-    const result = await Notes.findByIdAndDelete({_id:id})
+    const result = await Notes.findByIdAndDelete({ _id: id })
     res.json({
-      res : result,
+      res: result,
     });
   } catch (error) {
     res.json({
@@ -150,11 +140,11 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
 
 router.delete("/deleteall", fetchuser, async (req, res) => {
   try {
-    
+
     const user = req.user;
-    const result = await Notes.deleteMany({user:user})
+    const result = await Notes.deleteMany({ user: user })
     res.json({
-      res : result,
+      res: result,
     });
   } catch (error) {
     res.json({
