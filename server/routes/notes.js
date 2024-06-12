@@ -61,7 +61,7 @@ router.post(
         user: user,
         title: title,
         description: description,
-        tag: tag,
+        tag: tag ? tag : "Default",
       });
       res.json({
         note: note,
@@ -74,5 +74,33 @@ router.post(
     }
   }
 );
+
+router.put("/updatenote/:id", fetchuser,async(req,res)=>{
+    try {
+        const {title,description,tag} = req.body
+        const data = {}
+        if(title)data.title = title 
+        if(description)data.description = description
+        if(tag)data.tag = tag 
+
+        const user = req.user
+        const id = req.params.id
+        const note = await Notes.findById({_id:id})
+        if(!note || note.user.toString()!==req.user){
+            throw new Error("Note not found!")
+        }
+        const newNote = await Notes.findByIdAndUpdate({_id:id},{$set:data},{new:true})
+
+        res.json({
+            note : newNote
+        })
+        
+    } catch (error) {
+        res.json({
+            error: error.message,
+            errorDetails: error,
+          });
+    }
+})
 
 module.exports = router;
