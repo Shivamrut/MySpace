@@ -4,6 +4,7 @@ const User = require("../models/Users");
 const { validationResult, body } = require("express-validator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const fetchuser = require("../middleware/fetchuser");
 
 const JWT_KEY = "MYSECRETKEY";
 
@@ -109,5 +110,15 @@ router.post(
     }
   }
 );
+
+router.post("/getuser", fetchuser, async (req, res) => {
+  try {
+    const id = req.user;
+    const userData = await User.findOne({ _id: id }).select("-password");
+    res.json({ user: userData });
+  } catch (error) {
+    res.json({ message: "Error fetching user data", error: error });
+  }
+});
 
 module.exports = router;
