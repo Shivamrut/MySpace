@@ -136,6 +136,7 @@ function Notes() {
             <Addnote />
             <div className=" row my-3">
                 <h1>Your Notes</h1>
+                {notes.length===0 && <div className="container">No Notes to display</div> } 
                 {notes.map((i) => {
                     return <Noteitem key={i._id} note={i} updateNote={updateNote} />
                 })}

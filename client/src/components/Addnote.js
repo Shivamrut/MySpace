@@ -5,16 +5,17 @@ import noteContext from '../context/notes/NoteContext'
 function Addnote() {
     const context = useContext(noteContext)
     const { addNote } = context
-
-    const [note,setNote] = useState({
+    const initNote = {
         title:"",
         description : "",
         tag : ""
-    })
+    }
+    const [note,setNote] = useState(initNote)
 
     const handleSubmit = () => {
-        console.log(note)
+        // console.log(note)
         addNote(note)
+        setNote(initNote)
 
     }
     const onChange = (e)=>{
@@ -38,6 +39,7 @@ function Addnote() {
                             id="title"
                             name='title'
                             onChange={onChange}
+                            value={note.title}
                         />
                     </div>
                     <div className="mb-3">
@@ -50,6 +52,7 @@ function Addnote() {
                             id="description"
                             name='description'
                             onChange={onChange}
+                            value={note.description}
                         />
                     </div>
                     <div className="mb-3">
@@ -62,6 +65,7 @@ function Addnote() {
                             id="tag"
                             name='tag'
                             onChange={onChange}
+                            value={note.tag}
                         />
                     </div>
                     
