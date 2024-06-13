@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import NoteContext from '../context/notes/NoteContext'
 
 function About() {
+  const a = useContext(NoteContext)
+
+  useEffect(()=>{
+    a.changedata()
+  }, [])
+
   return (
-    <div>This is about</div>
-  )
+    <>
+      <h1>Hi, I'm Learning from {a.sample.name} and the yt channel is {a.sample.channel}</h1>
+    </>)
 }
 
 export default About
