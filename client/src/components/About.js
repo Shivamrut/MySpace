@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react'
-import NoteContext from '../context/notes/NoteContext'
+import React from 'react'
 
 function About() {
-  
+
 
   return (
     <>
+    <h1>This is the about page</h1>
     </>)
 }
 

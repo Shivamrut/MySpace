@@ -4,6 +4,7 @@ import About from './components/About';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import NoteState from './context/notes/NoteState';
+import Alert from './components/Alert';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
 
         <Router>
           <Navbar />
-          <div className="container">
+          <Alert alert={{"type" : "success","message" : "This is my notes app!"}}/>
+          <div className="container ">
 
             <Routes>
               <Route path='/' element={
