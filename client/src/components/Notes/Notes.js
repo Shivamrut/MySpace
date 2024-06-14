@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import {useNavigate} from "react-router-dom"
 import noteContext from '../../context/notes/NoteContext';
 import Noteitem from "../Notes/Noteitem"
 import Addnote from '../Addnote';
 
 function Notes() {
+    const navigate = useNavigate()
     const context = useContext(noteContext)
     const [note, setNote] = useState({
         etitle: "",
@@ -12,7 +14,9 @@ function Notes() {
     })
     const { notes, getAllNotes, editNote } = context
     useEffect(() => {
-        getAllNotes()
+        if(localStorage.getItem("token"))
+            getAllNotes()
+        else navigate("/login")
 
     }, [notes])
 
@@ -24,7 +28,8 @@ function Notes() {
         ref.current.click()
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         console.log(note)
         editNote(note)
         ref.current.click()
@@ -32,7 +37,7 @@ function Notes() {
     }
     const onChange = (e) => {
         console.log(note)
-        setNote({...note,[e.target.name]:e.target.value})
+        setNote({ ...note, [e.target.name]: e.target.value })
     }
     return (
         <>
@@ -71,7 +76,7 @@ function Notes() {
                             </div>
                             <div className="modal-body">
                                 <div className="container">
-                                    <form>
+                                    <form onSubmit={handleSubmit}>
 
                                         <div className="mb-3">
                                             <label htmlFor="etitle" className="form-label">
@@ -84,19 +89,23 @@ function Notes() {
                                                 name='etitle'
                                                 onChange={onChange}
                                                 value={note.etitle}
+                                                minLength={5}
+                                                required
                                             />
                                         </div>
                                         <div className="mb-3">
                                             <label htmlFor="edescription" className="form-label">
                                                 Description
                                             </label>
-                                            <textarea
+                                            <input
                                                 type="text"
-                                                className="form-control"
+                                                className="form-control resize-vertical"
                                                 id="edescription"
                                                 name='edescription'
                                                 onChange={onChange}
                                                 value={note.edescription}
+                                                minLength={5}
+                                                required
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -112,23 +121,30 @@ function Notes() {
                                                 value={note.etag}
                                             />
                                         </div>
+
+                                        <button type="submit" className="btn btn-primary " >
+                                            Update
+                                        </button>
+
+                                        <button
+                                            type="button"
+                                            className="btn btn-secondary mx-3"
+                                            data-bs-dismiss="modal"
+                                        >
+                                            Close
+                                        </button>
+
+
                                     </form>
 
                                 </div>
                             </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="btn btn-secondary"
-                                    data-bs-dismiss="modal"
-                                >
-                                    Close
-                                </button>
-                                <button type="button" className="btn btn-primary" onClick={handleSubmit}>
-                                    Update
-                                </button>
-                            </div>
+                            <div className="modal-footer"></div>
+
+
+
                         </div>
+
                     </div>
                 </div>
             </>
@@ -136,7 +152,7 @@ function Notes() {
             <Addnote />
             <div className=" row my-3">
                 <h1>Your Notes</h1>
-                {notes.length===0 && <div className="container">No Notes to display</div> } 
+                {notes.length === 0 && <div className="container">No Notes to display</div>}
                 {notes.map((i) => {
                     return <Noteitem key={i._id} note={i} updateNote={updateNote} />
                 })}

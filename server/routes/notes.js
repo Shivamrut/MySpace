@@ -34,7 +34,7 @@ router.post(
         min: 5,
       })
       .escape(),
-    body("description", "Description cannot be empty. Minimum 5 character")
+    body("description", "Description minimum 5 character")
       .notEmpty()
       .isLength({
         min: 5
@@ -65,10 +65,12 @@ router.post(
         tag: tag ? tag : "Default",
       });
       res.json({
-        note: note,
+        success: true,
+        note: note
       });
     } catch (error) {
       res.json({
+        success: false,
         error: error.message,
         errorDetails: error,
       });

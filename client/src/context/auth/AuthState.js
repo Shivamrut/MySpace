@@ -3,9 +3,7 @@ import AuthContext from "./AuthContext"
 
 const AuthState = (props)=>{
     const host = "http://localhost:8080/api"
-    const [token,setToken] = useState("")
-    const [logged,setLogged] = useState(false)
-
+    
     const login = async (user)=>{
         const {email,password} = user
         const res = await fetch(`${host}/auth/login`, {
@@ -17,13 +15,12 @@ const AuthState = (props)=>{
         })
         let stat = await res.json()
         if(stat.success){
-            setLogged(true)
-            setToken(stat.token)
-            return true;
+            localStorage.setItem("token",stat.token)
+            return {success : true, error : null}
         }
         else{
-            console.log("error logging in");
-            return false;
+            console.log(stat);
+            return {success : false, error : stat.error}
         }
         
     }
@@ -38,18 +35,17 @@ const AuthState = (props)=>{
         })
         let stat = await res.json()
         if(stat.success){
-            setLogged(true)
-            setToken(stat.token)
-            return true;
+            localStorage.setItem("token",stat.token)
+            return {success : true, error : null}
         }
         else{
-            console.log("Could not register!");
-            return false;
+            console.log(stat);
+            return {success : false, error : stat.error}
         }
         
     }
 
-    return <AuthContext.Provider value={{logged,token, setLogged,login,register}}>
+    return <AuthContext.Provider value={{login,register}}>
          {props.children}
     </AuthContext.Provider>
     

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import About from './components/About';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
@@ -10,14 +10,21 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 
 function App() {
+  const [alert,setAlert] = useState(null)
+  const showAlert = (type,message)=>{
+    setAlert({type,message})
+    setTimeout(() => {
+      setAlert(null)
+    }, 1500);
+  }
   return (
     <>
       <AuthState>
-        <NoteState>
+        <NoteState showAlert={showAlert}>
 
           <Router>
             <Navbar />
-            <Alert alert={{ "type": "success", "message": "This is my notes app!" }} />
+            <Alert alert={alert} /> 
             <div className="container ">
 
               <Routes>
@@ -28,10 +35,10 @@ function App() {
                   <About />
                 }></Route>
                 <Route path='/login' element={
-                  <Login />
+                  <Login showAlert={showAlert} />
                 }></Route>
                 <Route path='/signup' element={
-                  <Register />
+                  <Register showAlert={showAlert}/>
                 }></Route>
 
               </Routes>

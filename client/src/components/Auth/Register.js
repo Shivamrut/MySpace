@@ -2,24 +2,25 @@ import React, { useContext, useState } from 'react'
 import AuthContext from '../../context/auth/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
-function Register() {
-
+function Register(props) {
+    const {showAlert } = props
     const context = useContext(AuthContext)
     const [username,setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const { register } = context
     const navigate = useNavigate();
-    const handleRegister = async () => {
+    const handleRegister = async (event) => {
+        event.preventDefault()
         const res = await register({username, email, password })
-        console.log(res);
-        if (res) navigate("/")
+        if(res.success) navigate("/")
+        else showAlert("danger",res.error[0])
     }
 
     return (
         <>
             <h1>Register</h1>
-            <form>
+            <form onSubmit={handleRegister}>
                 <div className="mb-3">
                     <label htmlFor="username" className="form-label">
                         Username
@@ -30,6 +31,8 @@ function Register() {
                         id="username"
                         value={username}
                         onChange={(e)=>{setUsername(e.target.value)}}
+                        minLength={5}
+                        required
                     />
                 </div>
                 <div className="mb-3">
@@ -43,6 +46,7 @@ function Register() {
                         aria-describedby="emailHelp"
                         value={email}
                         onChange={(e)=>{setEmail(e.target.value)}}
+                        required
                     />
                     <div id="emailHelp" className="form-text">
                         We'll never share your email with anyone else.
@@ -58,12 +62,14 @@ function Register() {
                         id="password"
                         value={password}
                         onChange={(e)=>{setPassword(e.target.value)}}
+                        minLength={5}
+                        required
                     />
                 </div>
 
-                <div  className="btn btn-primary" onClick={handleRegister}>
+                <button className="btn btn-primary" >
                     Submit
-                </div>
+                </button>
             </form>
         </>
     )

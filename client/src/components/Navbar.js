@@ -1,8 +1,10 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from "react-router-dom"
 
 function Navbar() {
     const location = useLocation();
+    const navigate = useNavigate()
 
     return (
         <>
@@ -29,11 +31,11 @@ function Navbar() {
                                     Home
                                 </Link>
                             </li>
-                            <li className="nav-item">
+                            {/* <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}  `} to="/about">
                                     About
                                 </Link>
-                            </li>
+                            </li> */}
                             {/* <li className="nav-item dropdown">
                                 <Link
                                     className="nav-link dropdown-toggle"
@@ -71,15 +73,24 @@ function Navbar() {
                                 </Link>
                             </li>*/}
                         </ul>
+                        {!localStorage.getItem("token") ? <>
+                            <Link className="btn btn-outline-success m-1 " to="/login">
+                                Login
 
-                        <Link className="btn btn-outline-success m-1 " to="/login">
-                            Login
+                            </Link>
+                            <Link className="btn btn-outline-success m-1 " to="/signup">
+                                Sign Up
 
-                        </Link>
-                        <Link className="btn btn-outline-success m-1 " to="/signup">
-                            Sign Up
+                            </Link>
+                        </> : <Link className="btn btn-outline-success m-1 " onClick={() => {
+                            localStorage.removeItem("token")
+                            navigate("/login")
+                        }}>
+                            Logout
 
-                        </Link>
+                        </Link>}
+
+
                     </div>
                 </div>
             </nav>

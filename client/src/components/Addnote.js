@@ -6,20 +6,20 @@ function Addnote() {
     const context = useContext(noteContext)
     const { addNote } = context
     const initNote = {
-        title:"",
-        description : "",
-        tag : ""
+        title: "",
+        description: "",
+        tag: ""
     }
-    const [note,setNote] = useState(initNote)
+    const [note, setNote] = useState(initNote)
 
-    const handleSubmit = () => {
-        // console.log(note)
-        addNote(note)
-        setNote(initNote)
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const res = await addNote(note)
+        if(res)setNote(initNote)
 
     }
-    const onChange = (e)=>{
-        setNote({...note,[e.target.name] : e.target.value})
+    const onChange = (e) => {
+        setNote({ ...note, [e.target.name]: e.target.value })
     }
     return (
         <>
@@ -27,8 +27,8 @@ function Addnote() {
             <h1 >Add a Note</h1>
             {/* <div className="container d-flex justify-content-center my-3"> */}
             <div className="container">
-                <form>
-                    
+                <form onSubmit={handleSubmit}>
+
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">
                             Title
@@ -40,6 +40,8 @@ function Addnote() {
                             name='title'
                             onChange={onChange}
                             value={note.title}
+                            minLength={5}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -53,6 +55,7 @@ function Addnote() {
                             name='description'
                             onChange={onChange}
                             value={note.description}
+                            required
                         />
                     </div>
                     <div className="mb-3">
@@ -68,10 +71,8 @@ function Addnote() {
                             value={note.tag}
                         />
                     </div>
-                    
-                    {/* <div className="btn btn-dark" onClick={handleSubmit}> */}
-                    <i className="fa-solid fa-square-plus fa-2xl" onClick={handleSubmit}/>
-                    {/* </div> */}
+
+                    <button type='submit' className='btn btn-dark' ><i className="fa-solid fa-square-plus fa-lg" /></button>
                 </form>
 
             </div>

@@ -3,13 +3,10 @@ import NoteContext from "./NoteContext";
 import AuthContext from "../auth/AuthContext";
 
 const NoteState = (props) => {
-    const auth = useContext(AuthContext)
-    const {token} = auth
+    const {showAlert} = props
+    
     let noteData = []
     const host = "http://localhost:8080/api"
-    // const token1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjY2YWE2NDhiOGQxOWE3NGNmNmI1Y2I4IiwiaWF0IjoxNzE4MjY1NDE3fQ.SBPajxEZzUEA2sUcOdx0p3i1OMmKIP4h7psc6tEgFX8"
-    // const token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjY2OWFlMDI0MjUzZGUwYWI1YjcyNjE2IiwiaWF0IjoxNzE4MjAxODU5fQ.b5jYp3KIdM7MDVt5wncWZZPRoE99LCTIjcISy5IOxhs"
-    // const token = token2
     const [notes, setNotes] = useState(noteData)
 
     const getAllNotes = async () => {
@@ -17,24 +14,25 @@ const NoteState = (props) => {
             method: "GET",
             headers: {
 
-                "token":token,
+                "token":localStorage.getItem("token"),
                 "Content-Type": "application/json "
             },
             // body:JSON.stringify({})
         })
         noteData = await res.json()
-        setNotes(noteData.notes)
+        if(noteData.success) setNotes(noteData.notes)
     }
 
 
     const addNote = async (note) => {
         const { title, tag, description } = note
+        
 
         const res = await fetch(`${host}/notes/addNote`, {
             method: "POST",
             headers: {
 
-                "token":token,
+                "token":localStorage.getItem("token"),
                 "Content-Type": "application/json "
             },
             body: JSON.stringify({ title, description, tag })
@@ -42,10 +40,14 @@ const NoteState = (props) => {
         noteData = await res.json()
         console.log(noteData)
         if (noteData.success === false) {
-            return;
+            showAlert("danger",noteData.error[0])
+            return false;
+            
         }
         setNotes([...notes, noteData])
-
+        
+        showAlert("success","Added Note")
+        return true;
     }
     const editNote = async (note) => {
         const { etitle, etag, edescription,id } = note
@@ -54,7 +56,7 @@ const NoteState = (props) => {
             method: "PUT",
             headers: {
 
-                "token":token,
+                "token":localStorage.getItem("token"),
                 "Content-Type": "application/json "
             },
             body: JSON.stringify({ title : etitle, description:edescription, tag:etag })
@@ -62,8 +64,11 @@ const NoteState = (props) => {
         noteData = await res.json()
         console.log(noteData)
         if (noteData.success === false) {
-            return;
+            showAlert("danger",noteData.error[0])
+            return false ;
         }
+        showAlert("success","Updated Note")
+        return true;
     }
     const deleteNote = async (id) => {
         let newnotes = notes
@@ -73,16 +78,19 @@ const NoteState = (props) => {
             method: "DELETE",
             headers: {
 
-                "token":token,
+                "token":localStorage.getItem("token"),
                 "Content-Type": "application/json "
             },
         })
         noteData = await res.json()
         console.log(noteData)
         if (noteData.success === false) {
-            return;
+            showAlert("danger",noteData.error[0])
+            return false
         }
-        // setNotes([...notes, noteData])
+        showAlert("success","Deleted Note")
+        return true
+
     }
     return (
         <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getAllNotes }}>

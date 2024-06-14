@@ -11,8 +11,14 @@ const JWT_KEY = "MYSECRETKEY";
 router.post(
   "/login",
   [
-    body("email", "Enter valid email").exists().isEmail(),
-    body("password", "Password cannot be blank").exists(),
+    body("email")
+      .notEmpty()
+      .withMessage("Email cannot be blank")
+      .isEmail()
+      .withMessage("Invalid email format"),
+    body("password")
+      .notEmpty()
+      .withMessage("Password cannot be blank"),
   ],
   async (req, res) => {
 
@@ -41,13 +47,13 @@ router.post(
           } else {
             res.json({
               success: false,
-              user: "Password Incorrect",
+              error: ["Password Incorrect"],
             });
           }
         } else {
           res.json({
             success: false,
-            user: "User not found",
+            error: ["User not found"],
           });
         }
       })
@@ -63,9 +69,15 @@ router.post(
 router.post(
   "/signup",
   [
-    body("username", "Username too short").isLength({ min: 3 }),
-    body("email", "Enter valid email").isEmail(),
-    body("password", "Password is too short").isLength({ min: 5 }),
+    body("username")
+    .isLength({ min: 3 })
+    .withMessage("Username too short"),
+    body("email" )
+    .isEmail()
+    .withMessage("Enter valid email"),
+    body("password")
+    .isLength({ min: 5 })
+    .withMessage( "Password is too short"),
   ],
   async (req, res) => {
     const result = validationResult(req);
@@ -74,9 +86,9 @@ router.post(
       let { username, email, password } = req.body;
       let user = await User.findOne({ email: email });
       if (user) {
-        return res.status(400).json({
-          success: true,
-          error: "User email already exists",
+        return res.json({
+          success: false,
+          error: ["User email already exists"],
         });
       }
       const hash = await bcrypt.hash(password, 10);
@@ -99,7 +111,7 @@ router.post(
           console.log("Error signing up: ", e);
           res.json({
             success: false,
-            error: e.errorResponse.errmsg,
+            error: [e.errorResponse.errmsg],
           });
         });
     } else {

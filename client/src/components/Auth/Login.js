@@ -2,19 +2,22 @@ import React, { useContext, useState } from 'react'
 import {useNavigate} from "react-router-dom"
 import AuthContext from '../../context/auth/AuthContext'
 
-function Login() {
+function Login(props) {
+    const {showAlert} = props
     const context = useContext(AuthContext)
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const {login} = context
     const navigate = useNavigate();
-    const handleLogin = async ()=>{
+    const handleLogin = async (target)=>{
+        target.preventDefault()
         const res = await login({email,password})
-        if(res) navigate("/")
+        if(res.success) navigate("/")
+        else showAlert("danger",res.error[0])
     }
     return (
         <><h1>Login</h1>
-            <form>
+            <form onSubmit={handleLogin}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">
                         Email address
@@ -26,6 +29,7 @@ function Login() {
                         aria-describedby="emailHelp"
                         value={email}
                         onChange={(e)=>{setEmail(e.target.value)}}
+                        required
                     />
                     <div id="emailHelp" className="form-text">
                         We'll never share your email with anyone else.
@@ -41,12 +45,14 @@ function Login() {
                         id="password"
                         value={password}
                         onChange={(e)=>{setPassword(e.target.value)}}
+                        minLength={5} 
+                        required
                     />
                 </div>
 
-                <div  className="btn btn-primary" onClick={handleLogin}>
+                <button  className="btn btn-primary" >
                     Submit
-                </div>
+                </button>
             </form>
         </>
     )

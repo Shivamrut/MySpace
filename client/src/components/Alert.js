@@ -1,6 +1,16 @@
 import React from "react";
 
 export default function Alert(props) {
+  let AlertTitle = ""
+  switch (props.alert?props.alert.type:"") {
+    case "danger":
+      AlertTitle = "Error"
+      break;
+  
+    default:
+      AlertTitle = "Success"
+      break;
+  } 
   return (
     props.alert && (
       <div>
@@ -9,9 +19,7 @@ export default function Alert(props) {
           role="alert"
         >
           <strong>
-            {props.alert.type.charAt(0).toUpperCase() +
-              props.alert.type.slice(1) +
-              ": "}
+            {AlertTitle + ": "}
           </strong>
           {props.alert.message}
         </div>
