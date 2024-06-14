@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import {useNavigate} from "react-router-dom"
 import AuthContext from '../../context/auth/AuthContext'
 
 function Login() {
@@ -6,8 +7,10 @@ function Login() {
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const {login} = context
-    const handleLogin = ()=>{
-        login({email,password})
+    const navigate = useNavigate();
+    const handleLogin = async ()=>{
+        const res = await login({email,password})
+        if(res) navigate("/")
     }
     return (
         <><h1>Login</h1>
@@ -41,7 +44,7 @@ function Login() {
                     />
                 </div>
 
-                <div type="submit" className="btn btn-primary" onClick={handleLogin}>
+                <div  className="btn btn-primary" onClick={handleLogin}>
                     Submit
                 </div>
             </form>

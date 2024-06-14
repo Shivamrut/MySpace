@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import NoteContext from "./NoteContext";
+import AuthContext from "../auth/AuthContext";
 
 const NoteState = (props) => {
+    const auth = useContext(AuthContext)
+    const {token} = auth
     let noteData = []
     const host = "http://localhost:8080/api"
-    const token1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjY2YWE2NDhiOGQxOWE3NGNmNmI1Y2I4IiwiaWF0IjoxNzE4MjY1NDE3fQ.SBPajxEZzUEA2sUcOdx0p3i1OMmKIP4h7psc6tEgFX8"
-    const token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjY2OWFlMDI0MjUzZGUwYWI1YjcyNjE2IiwiaWF0IjoxNzE4MjAxODU5fQ.b5jYp3KIdM7MDVt5wncWZZPRoE99LCTIjcISy5IOxhs"
-    const token = token2
+    // const token1 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjY2YWE2NDhiOGQxOWE3NGNmNmI1Y2I4IiwiaWF0IjoxNzE4MjY1NDE3fQ.SBPajxEZzUEA2sUcOdx0p3i1OMmKIP4h7psc6tEgFX8"
+    // const token2 = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiNjY2OWFlMDI0MjUzZGUwYWI1YjcyNjE2IiwiaWF0IjoxNzE4MjAxODU5fQ.b5jYp3KIdM7MDVt5wncWZZPRoE99LCTIjcISy5IOxhs"
+    // const token = token2
     const [notes, setNotes] = useState(noteData)
 
     const getAllNotes = async () => {

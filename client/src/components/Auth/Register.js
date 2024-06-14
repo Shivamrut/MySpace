@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import AuthContext from '../../context/auth/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
-    
+
+    const context = useContext(AuthContext)
+    const [username,setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const { register } = context
+    const navigate = useNavigate();
+    const handleRegister = async () => {
+        const res = await register({username, email, password })
+        console.log(res);
+        if (res) navigate("/")
+    }
+
     return (
         <>
             <h1>Register</h1>
@@ -14,6 +28,8 @@ function Register() {
                         type="text"
                         className="form-control"
                         id="username"
+                        value={username}
+                        onChange={(e)=>{setUsername(e.target.value)}}
                     />
                 </div>
                 <div className="mb-3">
@@ -25,6 +41,8 @@ function Register() {
                         className="form-control"
                         id="email"
                         aria-describedby="emailHelp"
+                        value={email}
+                        onChange={(e)=>{setEmail(e.target.value)}}
                     />
                     <div id="emailHelp" className="form-text">
                         We'll never share your email with anyone else.
@@ -38,10 +56,12 @@ function Register() {
                         type="password"
                         className="form-control"
                         id="password"
+                        value={password}
+                        onChange={(e)=>{setPassword(e.target.value)}}
                     />
                 </div>
 
-                <div type="submit" className="btn btn-primary">
+                <div  className="btn btn-primary" onClick={handleRegister}>
                     Submit
                 </div>
             </form>
