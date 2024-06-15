@@ -43,6 +43,7 @@ router.post(
             res.json({
               success: true,
               token: token,
+              username : user.username
             });
           } else {
             res.json({
@@ -105,6 +106,7 @@ router.post(
           res.json({
             success: true,
             token: token,
+            username : user.username
           });
         })
         .catch((e) => {

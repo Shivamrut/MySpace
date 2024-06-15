@@ -15,7 +15,7 @@ function Addnote() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const res = await addNote(note)
-        if(res)setNote(initNote)
+        if (res) setNote(initNote)
 
     }
     const onChange = (e) => {
@@ -23,11 +23,10 @@ function Addnote() {
     }
     return (
         <>
-            {/* <h1 className='d-flex justify-content-center'>Add a Note</h1> */}
-            <h1 >Add a Note</h1>
-            {/* <div className="container d-flex justify-content-center my-3"> */}
-            <div className="container">
-                <form onSubmit={handleSubmit}>
+            <div className="d-flex justify-content-center flex-column align-items-center mt-2" >
+                <h1 className='my-3 text-align-center' >Add a Note</h1>
+
+                <form className='' style={{width:"20rem"}} onSubmit={handleSubmit}>
 
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">
@@ -74,6 +73,7 @@ function Addnote() {
 
                     <button type='submit' className='btn btn-dark' ><i className="fa-solid fa-square-plus fa-lg" /></button>
                 </form>
+
 
             </div>
         </>

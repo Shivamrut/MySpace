@@ -1,4 +1,3 @@
-import { useState } from "react"
 import AuthContext from "./AuthContext"
 
 const AuthState = (props)=>{
@@ -16,6 +15,7 @@ const AuthState = (props)=>{
         let stat = await res.json()
         if(stat.success){
             localStorage.setItem("token",stat.token)
+            localStorage.setItem("username",stat.username)
             return {success : true, error : null}
         }
         else{
@@ -36,6 +36,7 @@ const AuthState = (props)=>{
         let stat = await res.json()
         if(stat.success){
             localStorage.setItem("token",stat.token)
+            localStorage.setItem("username",stat.username)
             return {success : true, error : null}
         }
         else{

@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
-import About from './components/About';
+import React, {  useState } from 'react'
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import NoteState from './context/notes/NoteState';
@@ -31,9 +30,7 @@ function App() {
                 <Route path='/' element={
                   <Home />
                 }></Route>
-                <Route path='/about' element={
-                  <About />
-                }></Route>
+                
                 <Route path='/login' element={
                   <Login showAlert={showAlert} />
                 }></Route>

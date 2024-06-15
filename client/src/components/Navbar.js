@@ -26,52 +26,13 @@ function Navbar() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            {localStorage.getItem("token") && 
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}  `} aria-current="page" to="/">
-                                    Home
+                                    {localStorage.getItem("username")?localStorage.getItem("username"):"Home"}
                                 </Link>
-                            </li>
-                            {/* <li className="nav-item">
-                                <Link className={`nav-link ${location.pathname === "/about" ? "active" : ""}  `} to="/about">
-                                    About
-                                </Link>
-                            </li> */}
-                            {/* <li className="nav-item dropdown">
-                                <Link
-                                    className="nav-link dropdown-toggle"
-                                    to="#"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Dropdown
-                                </Link>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <Link className="dropdown-item" to="#">
-                                            Action
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="#">
-                                            Another action
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <hr className="dropdown-divider" />
-                                    </li>
-                                    <li>
-                                        <Link className="dropdown-item" to="#">
-                                            Something else here
-                                        </Link>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link disabled" aria-disabled="true">
-                                    Disabled
-                                </Link>
-                            </li>*/}
+                            </li>}
+                            
                         </ul>
                         {!localStorage.getItem("token") ? <>
                             <Link className="btn btn-outline-success m-1 " to="/login">

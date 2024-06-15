@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import noteContext from '../../context/notes/NoteContext';
 import Noteitem from "../Notes/Noteitem"
 import Addnote from '../Addnote';
@@ -14,7 +14,7 @@ function Notes() {
     })
     const { notes, getAllNotes, editNote } = context
     useEffect(() => {
-        if(localStorage.getItem("token"))
+        if (localStorage.getItem("token"))
             getAllNotes()
         else navigate("/login")
 
@@ -150,6 +150,7 @@ function Notes() {
             </>
 
             <Addnote />
+            {/* <hr/> */}
             <div className=" row my-3">
                 <h1>Your Notes</h1>
                 {notes.length === 0 && <div className="container">No Notes to display</div>}
