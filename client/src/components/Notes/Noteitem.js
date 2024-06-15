@@ -5,7 +5,7 @@ import noteContext from '../../context/notes/NoteContext'
 function Noteitem(props) {
     const context = useContext(noteContext)
     const { deleteNote} = context
-    const { note, updateNote } = props
+    const { note, updateNote, viewNote } = props
     const onDeleteClick = ()=>{
         deleteNote(note._id)
     }
@@ -21,10 +21,10 @@ function Noteitem(props) {
                     // gridTemplateColumns: 'repeat(auto-fit, minmax(18rem, 1fr))',
                 }}>
                     <div className="card-body">
-                        <h5 className="card-title">{note.title}</h5>
+                        <h5 className="card-title">{note.title.length>24? note.title.slice(0,24)+"..":note.title}</h5>
                         <h6 className="card-subtitle mb-2 text-body-secondary">{note.tag}</h6>
                         <p className="card-text">
-                            {note.description}
+                            {note.description.length>90? note.description.slice(0,90)+"..":note.description}
                         </p>
 
                     </div>
@@ -32,6 +32,7 @@ function Noteitem(props) {
 
                         <i className="fa-sharp fa-solid fa-trash mx-2 " onClick={onDeleteClick}></i>
                         <i className="fa-solid fa-pen-to-square mx-2" onClick={()=>updateNote(note)}></i>
+                        <i className="fa-sharp fa-regular fa-folder-open mx-2" onClick={()=>viewNote(note)}></i>
                     </div>
                 </div >
             </div>

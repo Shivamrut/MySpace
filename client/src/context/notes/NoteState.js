@@ -1,6 +1,5 @@
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import NoteContext from "./NoteContext";
-import AuthContext from "../auth/AuthContext";
 
 const NoteState = (props) => {
     const {showAlert} = props
@@ -44,7 +43,9 @@ const NoteState = (props) => {
             return false;
             
         }
-        setNotes([...notes, noteData])
+        getAllNotes()
+        // setNotes([...notes, noteData])
+        
         
         showAlert("success","Added Note")
         return true;

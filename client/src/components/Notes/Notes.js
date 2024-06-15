@@ -21,11 +21,18 @@ function Notes() {
     }, [notes])
 
     const ref = useRef(null)
+    const viewRef = useRef(null)
     const updateNote = (curNote) => {
 
         setNote({ etitle: curNote.title, etag: curNote.tag, edescription: curNote.description, id: curNote._id })
 
         ref.current.click()
+    }
+
+    const viewNote = (curNote) => {
+        setNote({ etitle: curNote.title, etag: curNote.tag, edescription: curNote.description, id: curNote._id })
+
+        viewRef.current.click()
     }
 
     const handleSubmit = (e) => {
@@ -41,7 +48,7 @@ function Notes() {
     }
     return (
         <>
-            <>
+            <div className='editModal'>
                 <button
                     type="button"
                     ref={ref}
@@ -147,15 +154,66 @@ function Notes() {
 
                     </div>
                 </div>
-            </>
+            </div>
+            <div className="viewModal">
+                <>
+                    <button
+                        type="button"
+                        className="btn btn-primary d-none"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                        ref={viewRef}
+                    >
+                        View
+                    </button>
+                    <div
+                        className="modal fade"
+                        id="exampleModal"
+                        tabIndex={-1}
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h1 className="modal-title  text-body-secondary fs-4" id="exampleModalLabel">
+                                        {note.etitle}
+                                    </h1>
+
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    />
+                                </div>
+                                <div className="modal-body">
+                                    {note.edescription}
+                                </div>
+                                <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                    >
+                                        Close
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </>
+
+            </div>
 
             <Addnote />
             {/* <hr/> */}
             <div className=" row my-3">
-                <h1>Your Notes</h1>
+            <h1>Your Notes</h1>
                 {notes.length === 0 && <div className="container">No Notes to display</div>}
                 {notes.map((i) => {
-                    return <Noteitem key={i._id} note={i} updateNote={updateNote} />
+                    return <Noteitem key={i._id} note={i} updateNote={updateNote} viewNote={viewNote} />
                 })}
             </div>
         </>
