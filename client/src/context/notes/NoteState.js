@@ -3,13 +3,20 @@ import NoteContext from "./NoteContext";
 
 const NoteState = (props) => {
     const {showAlert} = props
+    const [tag,setTag] = useState("ALL")
     
     let noteData = []
-    const host = "http://localhost:8080/api"
     const [notes, setNotes] = useState(noteData)
 
+    let tagData = []
+    const [tags, setTags] = useState(tagData)
+    const host = "http://localhost:8080/api"
+
     const getAllNotes = async () => {
-        const res = await fetch(`${host}/notes/getAllNotes`, {
+        let endpoint = ""
+        if(tag==="ALL")endpoint = "/notes/getAllNotes"
+        else endpoint=`/notes/getNotesWithTag/${tag}`
+        const res = await fetch(`${host}${endpoint}`, {
             method: "GET",
             headers: {
 
@@ -19,7 +26,23 @@ const NoteState = (props) => {
             // body:JSON.stringify({})
         })
         noteData = await res.json()
+        console.log(noteData);
         if(noteData.success) setNotes(noteData.notes)
+    }
+
+    const getTags = async()=>{
+        const res = await fetch(`${host}/notes/getTags`, {
+            method: "GET",
+            headers: {
+
+                "token":localStorage.getItem("token"),
+                "Content-Type": "application/json "
+            },
+            // body:JSON.stringify({})
+        })
+        tagData = await res.json()
+        console.log(tagData.tags);
+        if(tagData.success) setTags(tagData.tags)
     }
 
 
@@ -94,7 +117,7 @@ const NoteState = (props) => {
 
     }
     return (
-        <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote, getAllNotes }}>
+        <NoteContext.Provider value={{tag, notes,tags,setTag, setNotes,getTags, addNote, deleteNote, editNote, getAllNotes }}>
             {props.children}
 
         </NoteContext.Provider>

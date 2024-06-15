@@ -12,13 +12,15 @@ function Notes() {
         edescription: "",
         etag: ""
     })
-    const { notes, getAllNotes, editNote } = context
+    const { notes,tags, getAllNotes, editNote,getTags,setTags,setNotes } = context
     useEffect(() => {
-        if (localStorage.getItem("token"))
+        if (localStorage.getItem("token")){
             getAllNotes()
+            getTags()
+        }
         else navigate("/login")
 
-    }, [notes])
+    }, [setTags,setNotes])
 
     const ref = useRef(null)
     const viewRef = useRef(null)

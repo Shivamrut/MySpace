@@ -25,6 +25,40 @@ router.get("/getAllNotes", fetchuser, async (req, res) => {
   }
 });
 
+router.get("/getTags", fetchuser, async (req, res) => {
+  try {
+    const user = req.user;
+    const notes = await Notes.distinct("tag",{user:user}) 
+    res.json({
+      success: true,
+      tags: notes,
+    });
+  } catch (error) {
+    res.json({
+      error: error.message,
+      errorDetails: error,
+    });
+  }
+});
+router.get("/getNotesWithTag/:tag", fetchuser, async (req, res) => {
+  try {
+    const user = req.user;
+    const tag = req.params.tag
+    const notes = await Notes.find({
+      user: user, tag:tag
+    });
+    res.json({
+      success: true,
+      notes: notes,
+    });
+  } catch (error) {
+    res.json({
+      error: error.message,
+      errorDetails: error,
+    });
+  }
+});
+
 router.post(
   "/addNote",
   [
