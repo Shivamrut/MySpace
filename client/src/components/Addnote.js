@@ -17,7 +17,7 @@ function Addnote() {
 
         e.preventDefault()
         const res = await addNote(note)
-        console.log(res);
+        // console.log(res);
         if (res) {
             setNote(initNote)
             addRef.current.click();

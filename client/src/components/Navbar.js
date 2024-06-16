@@ -1,17 +1,21 @@
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { Link, useLocation } from "react-router-dom"
 import noteContext from '../context/notes/NoteContext';
 
 function Navbar() {
     const location = useLocation();
-    const navigate = useNavigate()
     const context = useContext(noteContext)
     const {tag,setTag,tags,setNotes} = context
 
     const handleTag = (e)=>{
         console.log(e.target.textContent);
         setTag(e.target.textContent)
+    }
+
+    const handleLogout = ()=>{
+        localStorage.removeItem("token")
+                            
+        setNotes([])
     }
 
     return (
@@ -52,7 +56,7 @@ function Navbar() {
                                 </Link>
                                 <ul className="dropdown-menu">
                                     <li>
-                                        <Link className="dropdown-item" >
+                                        <Link className="dropdown-item" onClick={()=>{setTag("ALL")}} >
                                             ALL
                                         </Link>
                                     </li>
@@ -79,11 +83,7 @@ function Navbar() {
                                 Sign Up
 
                             </Link>
-                        </> : <Link className="btn btn-outline-success m-1 " onClick={() => {
-                            localStorage.removeItem("token")
-                            
-                            setNotes([])
-                        }} to="/login">
+                        </> : <Link className="btn btn-outline-success m-1 " onClick={handleLogout} to="/login">
                             Logout
 
                         </Link>}

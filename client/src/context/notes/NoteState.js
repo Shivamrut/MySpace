@@ -26,7 +26,7 @@ const NoteState = (props) => {
             // body:JSON.stringify({})
         })
         noteData = await res.json()
-        console.log(noteData);
+        // console.log(noteData);
         if(noteData.success) setNotes(noteData.notes)
     }
 
@@ -41,7 +41,7 @@ const NoteState = (props) => {
             // body:JSON.stringify({})
         })
         tagData = await res.json()
-        console.log(tagData.tags);
+        // console.log(tagData.tags);
         if(tagData.success) setTags(tagData.tags)
     }
 
@@ -66,10 +66,11 @@ const NoteState = (props) => {
             return false;
             
         }
-        getAllNotes()
-        // setNotes([...notes, noteData])
+        // console.log(noteData);
+        // getAllNotes()
+        setNotes([...notes, noteData.note])
         
-        
+        getTags()
         showAlert("success","Added Note")
         return true;
     }
@@ -91,6 +92,8 @@ const NoteState = (props) => {
             showAlert("danger",noteData.error[0])
             return false ;
         }
+        setNotes(notes.map(n => n._id === id ? noteData.note : n));
+        getTags()
         showAlert("success","Updated Note")
         return true;
     }
@@ -112,6 +115,8 @@ const NoteState = (props) => {
             showAlert("danger",noteData.error[0])
             return false
         }
+        setNotes(notes.filter(n => n._id !== id)); 
+        getTags()
         showAlert("success","Deleted Note")
         return true
 

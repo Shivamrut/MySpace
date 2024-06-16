@@ -12,7 +12,7 @@ function Notes() {
         edescription: "",
         etag: ""
     })
-    const { notes,tags, getAllNotes, editNote,getTags,setTags,setNotes } = context
+    const { notes , tag, getAllNotes, editNote,getTags } = context
     useEffect(() => {
         if (localStorage.getItem("token")){
             getAllNotes()
@@ -20,7 +20,13 @@ function Notes() {
         }
         else navigate("/login")
 
-    }, [setTags,setNotes])
+    }, [])
+    useEffect(() => {
+        if (localStorage.getItem("token")){
+            getAllNotes();
+            getTags()
+        }
+    }, [tag]);
 
     const ref = useRef(null)
     const viewRef = useRef(null)
@@ -39,13 +45,12 @@ function Notes() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log(note)
+        // console.log(note)
         editNote(note)
         ref.current.click()
 
     }
     const onChange = (e) => {
-        console.log(note)
         setNote({ ...note, [e.target.name]: e.target.value })
     }
     return (
