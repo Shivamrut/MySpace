@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import React, {  useState } from 'react'
+import React, { useState } from 'react'
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import NoteState from './context/notes/NoteState';
@@ -9,9 +9,9 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 
 function App() {
-  const [alert,setAlert] = useState(null)
-  const showAlert = (type,message)=>{
-    setAlert({type,message})
+  const [alert, setAlert] = useState(null)
+  const showAlert = (type, message) => {
+    setAlert({ type, message })
     setTimeout(() => {
       setAlert(null)
     }, 1500);
@@ -23,19 +23,19 @@ function App() {
 
           <Router>
             <Navbar />
-            <Alert alert={alert} /> 
+            <Alert alert={alert} />
             <div className="container ">
 
               <Routes>
                 <Route path='/' element={
                   <Home />
                 }></Route>
-                
+
                 <Route path='/login' element={
                   <Login showAlert={showAlert} />
                 }></Route>
                 <Route path='/signup' element={
-                  <Register showAlert={showAlert}/>
+                  <Register showAlert={showAlert} />
                 }></Route>
 
               </Routes>

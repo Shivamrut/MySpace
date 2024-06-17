@@ -17,7 +17,6 @@ function Addnote() {
 
         e.preventDefault()
         const res = await addNote(note)
-        // console.log(res);
         if (res) {
             setNote(initNote)
             addRef.current.click();
@@ -33,7 +32,6 @@ function Addnote() {
                 <h1 className='my-3 text-align-center me-3' >Add   </h1>
 
                 <>
-                    {/* Button trigger modal */}
                     <button
                         type="button"
                         className="btn btn-dark m-3"
@@ -41,9 +39,8 @@ function Addnote() {
                         data-bs-target="#addModal"
                         ref={addRef}
                     >
-                        <i className="fa-solid fa-square-plus fa-lg"/>
+                        <i className="fa-solid fa-square-plus fa-lg" />
                     </button>
-                    {/* Modal */}
                     <div
                         className="modal fade"
                         id="addModal"
@@ -120,12 +117,10 @@ function Addnote() {
                                         </button>
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </>
-
             </div>
         </>
     )

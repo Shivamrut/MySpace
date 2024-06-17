@@ -12,9 +12,9 @@ function Notes() {
         edescription: "",
         etag: ""
     })
-    const { notes , tag, getAllNotes, editNote,getTags } = context
+    const { notes, tag, getAllNotes, editNote, getTags } = context
     useEffect(() => {
-        if (localStorage.getItem("token")){
+        if (localStorage.getItem("token")) {
             getAllNotes()
             getTags()
         }
@@ -22,7 +22,7 @@ function Notes() {
 
     }, [])
     useEffect(() => {
-        if (localStorage.getItem("token")){
+        if (localStorage.getItem("token")) {
             getAllNotes();
             getTags()
         }
@@ -45,7 +45,6 @@ function Notes() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // console.log(note)
         editNote(note)
         ref.current.click()
 
@@ -135,11 +134,9 @@ function Notes() {
                                                 value={note.etag}
                                             />
                                         </div>
-
                                         <button type="submit" className="btn btn-primary " >
                                             Update
                                         </button>
-
                                         <button
                                             type="button"
                                             className="btn btn-secondary mx-3"
@@ -147,18 +144,11 @@ function Notes() {
                                         >
                                             Close
                                         </button>
-
-
                                     </form>
-
                                 </div>
                             </div>
                             <div className="modal-footer"></div>
-
-
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -215,9 +205,8 @@ function Notes() {
             </div>
 
             <Addnote />
-            {/* <hr/> */}
             <div className=" row my-3">
-            <h1>Your Notes</h1>
+                <h1>Your Notes</h1>
                 {notes.length === 0 && <div className="container">No Notes to display</div>}
                 {notes.map((i) => {
                     return <Noteitem key={i._id} note={i} updateNote={updateNote} viewNote={viewNote} />

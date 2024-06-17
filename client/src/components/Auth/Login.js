@@ -20,7 +20,7 @@ function Login(props) {
             <div className="d-flex justify-content-center flex-column align-items-center mt-5" >
 
                 <h2 className='my-3 text-align-center'>Login</h2>
-                <form  onSubmit={handleLogin}>
+                <form onSubmit={handleLogin}>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">
                             Email address

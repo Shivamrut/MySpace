@@ -43,7 +43,7 @@ router.post(
             res.json({
               success: true,
               token: token,
-              username : user.username
+              username: user.username
             });
           } else {
             res.json({
@@ -71,14 +71,14 @@ router.post(
   "/signup",
   [
     body("username")
-    .isLength({ min: 3 })
-    .withMessage("Username too short"),
-    body("email" )
-    .isEmail()
-    .withMessage("Enter valid email"),
+      .isLength({ min: 3 })
+      .withMessage("Username too short"),
+    body("email")
+      .isEmail()
+      .withMessage("Enter valid email"),
     body("password")
-    .isLength({ min: 5 })
-    .withMessage( "Password is too short"),
+      .isLength({ min: 5 })
+      .withMessage("Password is too short"),
   ],
   async (req, res) => {
     const result = validationResult(req);
@@ -106,11 +106,10 @@ router.post(
           res.json({
             success: true,
             token: token,
-            username : user.username
+            username: user.username
           });
         })
         .catch((e) => {
-          console.log("Error signing up: ", e);
           res.json({
             success: false,
             error: [e.errorResponse.errmsg],

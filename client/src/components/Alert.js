@@ -2,15 +2,15 @@ import React from "react";
 
 export default function Alert(props) {
   let AlertTitle = ""
-  switch (props.alert?props.alert.type:"") {
+  switch (props.alert ? props.alert.type : "") {
     case "danger":
       AlertTitle = "Error"
       break;
-  
+
     default:
       AlertTitle = "Success"
       break;
-  } 
+  }
   return (
     props.alert && (
       <div>

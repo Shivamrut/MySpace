@@ -28,7 +28,7 @@ router.get("/getAllNotes", fetchuser, async (req, res) => {
 router.get("/getTags", fetchuser, async (req, res) => {
   try {
     const user = req.user;
-    const notes = await Notes.distinct("tag",{user:user}) 
+    const notes = await Notes.distinct("tag", { user: user })
     res.json({
       success: true,
       tags: notes,
@@ -45,7 +45,7 @@ router.get("/getNotesWithTag/:tag", fetchuser, async (req, res) => {
     const user = req.user;
     const tag = req.params.tag
     const notes = await Notes.find({
-      user: user, tag:tag
+      user: user, tag: tag
     });
     res.json({
       success: true,

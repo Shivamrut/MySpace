@@ -5,16 +5,15 @@ import noteContext from '../context/notes/NoteContext';
 function Navbar() {
     const location = useLocation();
     const context = useContext(noteContext)
-    const {tag,setTag,tags,setNotes} = context
+    const { tag, setTag, tags, setNotes } = context
 
-    const handleTag = (e)=>{
-        console.log(e.target.textContent);
+    const handleTag = (e) => {
         setTag(e.target.textContent)
     }
 
-    const handleLogout = ()=>{
+    const handleLogout = () => {
         localStorage.removeItem("token")
-                            
+        setTag("ALL")
         setNotes([])
     }
 
@@ -23,7 +22,7 @@ function Navbar() {
             <nav className="navbar navbar-expand-lg bg-body-tertiary">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="/">
-                        INoteBook
+                        MySpace<i className="fa-solid fa-house mx-2"></i>
                     </Link>
                     <button
                         className="navbar-toggler"
@@ -44,7 +43,7 @@ function Navbar() {
                                         {localStorage.getItem("username") ? localStorage.getItem("username") : "Home"}
                                     </Link>
                                 </li>}
-                            <li className="nav-item dropdown">
+                            {localStorage.getItem("token") && <li className="nav-item dropdown">
                                 <Link
                                     className="nav-link dropdown-toggle"
                                     to="#"
@@ -52,27 +51,23 @@ function Navbar() {
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                 >
-                                    {"Tag: "+tag}
+                                    {"Tag: " + tag}
                                 </Link>
-                                <ul className="dropdown-menu">
+                                <ul className="dropdown-menu ">
                                     <li>
-                                        <Link className="dropdown-item" onClick={()=>{setTag("ALL")}} >
+                                        <Link key="ALL" className="dropdown-item" onClick={() => { setTag("ALL") }} >
                                             ALL
                                         </Link>
                                     </li>
-                                    {tags.map((i)=>{
+                                    {tags.map((i) => {
                                         return <li>
-                                        <Link key={i} className="dropdown-item"  onClick={handleTag}>
-                                            {i}
-                                        </Link>
-                                    </li>
+                                            <Link key={i} className="dropdown-item" onClick={handleTag}>
+                                                {i}
+                                            </Link>
+                                        </li>
                                     })}
-
-                                    
                                 </ul>
-                            </li>
-
-
+                            </li>}
                         </ul>
                         {!localStorage.getItem("token") ? <>
                             <Link className="btn btn-outline-success m-1 " to="/login">
@@ -87,12 +82,9 @@ function Navbar() {
                             Logout
 
                         </Link>}
-
-
                     </div>
                 </div>
             </nav>
-
         </>
     )
 }
