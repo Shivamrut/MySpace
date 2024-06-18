@@ -1,0 +1,23 @@
+{
+    "server": {
+        "db.js": "done",
+        "index.js": "done",
+        "middleware": {
+            "fetchuser.js": "done"
+        },
+        "models": {
+            "Notes.js": "done",
+            "Users.js": "done"
+        },
+        "routes": {
+            "authentication.js": {
+                "login": "",
+                "signup": "",
+                "getuser": ""
+            },
+            "notes.js": {
+                "getAllNotes": "done"
+            }
+        }
+    }
+}

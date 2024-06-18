@@ -2,7 +2,7 @@ import jwt, {JwtPayload} from "jsonwebtoken"
 import { Request,Response,NextFunction } from "express"
 const JWT_KEY : string = "MYSECRETKEY"
 
-interface CustomRequest extends Request {
+export interface CustomRequest extends Request {
     user?: string
 }
 
