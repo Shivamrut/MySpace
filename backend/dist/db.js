@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.connectToMongo = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const mongoURI = "mongodb+srv://incineroaraditya:bs8JYDjX3gUFu698@cluster0.w8kkztd.mongodb.net/inotebook?retryWrites=true&w=majority&appName=Cluster0/inotebook";
 const connectToMongo = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -20,8 +21,8 @@ const connectToMongo = () => __awaiter(void 0, void 0, void 0, function* () {
         console.log("Connected to MongoDb!");
     }
     catch (err) {
-        console.log("Connection to Mongo failed!");
+        console.log("Connection to Mongo failed!\n", err);
     }
 });
-exports.default = connectToMongo;
+exports.connectToMongo = connectToMongo;
 //# sourceMappingURL=db.js.map
