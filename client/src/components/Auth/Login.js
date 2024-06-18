@@ -33,6 +33,7 @@ function Login(props) {
                             value={email}
                             onChange={(e) => { setEmail(e.target.value) }}
                             required
+                            
                         />
                         <div id="emailHelp" className="form-text">
                             We'll never share your email with anyone else.
@@ -50,6 +51,7 @@ function Login(props) {
                             onChange={(e) => { setPassword(e.target.value) }}
                             minLength={5}
                             required
+                            autoComplete='off'
                         />
                     </div>
 

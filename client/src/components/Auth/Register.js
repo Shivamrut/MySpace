@@ -34,6 +34,7 @@ function Register(props) {
                             onChange={(e) => { setUsername(e.target.value) }}
                             minLength={5}
                             required
+                            autoComplete='off'
                         />
                     </div>
                     <div className="mb-3">
@@ -48,6 +49,7 @@ function Register(props) {
                             value={email}
                             onChange={(e) => { setEmail(e.target.value) }}
                             required
+                            autoComplete='off'
                         />
                         <div id="emailHelp" className="form-text">
                             We'll never share your email with anyone else.
@@ -65,6 +67,7 @@ function Register(props) {
                             onChange={(e) => { setPassword(e.target.value) }}
                             minLength={5}
                             required
+                            autoComplete='off'
                         />
                     </div>
 

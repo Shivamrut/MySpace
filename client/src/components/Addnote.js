@@ -77,6 +77,7 @@ function Addnote() {
                                                 value={note.title}
                                                 minLength={5}
                                                 required
+                                                autoComplete='off'
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -91,6 +92,7 @@ function Addnote() {
                                                 onChange={onChange}
                                                 value={note.description}
                                                 required
+                                                
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -104,6 +106,7 @@ function Addnote() {
                                                 name='tag'
                                                 onChange={onChange}
                                                 value={note.tag}
+                                                autoComplete='off'
                                             />
                                         </div>
                                         <button type='submit' className='btn btn-dark ' ><i className="fa-solid fa-square-plus fa-lg" /></button>

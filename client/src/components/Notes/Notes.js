@@ -104,6 +104,7 @@ function Notes() {
                                                 value={note.etitle}
                                                 minLength={5}
                                                 required
+                                                autoComplete='off'
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -119,6 +120,7 @@ function Notes() {
                                                 value={note.edescription}
                                                 minLength={5}
                                                 required
+                                                autoComplete='off'
                                             />
                                         </div>
                                         <div className="mb-3">
@@ -132,6 +134,7 @@ function Notes() {
                                                 name='etag'
                                                 onChange={onChange}
                                                 value={note.etag}
+                                                autoComplete='off'
                                             />
                                         </div>
                                         <button type="submit" className="btn btn-primary " >
