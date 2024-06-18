@@ -1,17 +1,23 @@
-import express from 'express';
+import express, {Request,Response,Application} from 'express';
 import cors from "cors"
-import mongo from "./db"
+import {connectToMongo} from "./db"
 
-mongo()
+import authRoutes from "./routes/authentication"
+import noteRoutes from "./routes/notes"
 
-const app = express();
+connectToMongo()
+
+const app : Application = express();
 
 app.use(cors())
 app.use(express.json())
 
-const port = 8080;
+app.use("/api/auth",authRoutes)
+app.use("/api/notes",noteRoutes)
 
-app.get('/', (req, res) => {
+const port : number = 8080;
+
+app.get('/', (req :Request, res: Response) => {
   res.send('Hello World!');
 });
 
