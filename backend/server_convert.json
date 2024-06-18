@@ -11,12 +11,17 @@
         },
         "routes": {
             "authentication.js": {
-                "login": "",
-                "signup": "",
-                "getuser": ""
+                "login": "done",
+                "signup": "done",
+                "getuser": "done"
             },
             "notes.js": {
-                "getAllNotes": "done"
+                "getAllNotes": "done",
+                "addNote" : "done",
+                "updatenote" : "done",
+                "deletenote" : "done",
+                "getNotesWithTag" : "done",
+                "getTags" : "done"
             }
         }
     }

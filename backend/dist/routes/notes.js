@@ -13,15 +13,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const router = express_1.default.Router();
 const Notes_1 = require("../models/Notes");
 const fetchuser_1 = require("../middleware/fetchuser");
 const express_validator_1 = require("express-validator");
+const router = express_1.default.Router();
 router.get("/getAllNotes", fetchuser_1.fetchUserId, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = req.user;
         if (!user) {
-            return res.status(400).json({ success: false, message: 'User not authenticated' });
+            res.status(400).json({ success: false, message: 'User not authenticated' });
+            return;
         }
         const notes = yield Notes_1.Notes.find({
             user: user
@@ -91,10 +92,11 @@ router.post("/addNote", [
     try {
         const result = (0, express_validator_1.validationResult)(req);
         if (!result.isEmpty()) {
-            return res.json({
+            res.json({
                 success: false,
                 error: result.array().map((e) => e.msg),
             });
+            return;
         }
         const { title, tag, description } = req.body;
         const user = req.user;
