@@ -1,6 +1,6 @@
 import AuthContext from "./AuthContext"
 
-const AuthState = (props) => {
+export const AuthState = (props) => {
     const host = "http://localhost:8080/api"
 
     const login = async (user) => {
@@ -49,5 +49,3 @@ const AuthState = (props) => {
     </AuthContext.Provider>
 
 }
-
-export default AuthState
