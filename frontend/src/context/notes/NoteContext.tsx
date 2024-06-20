@@ -34,3 +34,4 @@ interface NoteContextType {
 }
 
 export const NoteContext = createContext<NoteContextType | null>(null);
+
