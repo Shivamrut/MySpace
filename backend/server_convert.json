@@ -1,0 +1,28 @@
+{
+    "server": {
+        "db.js": "done",
+        "index.js": "done",
+        "middleware": {
+            "fetchuser.js": "done"
+        },
+        "models": {
+            "Notes.js": "done",
+            "Users.js": "done"
+        },
+        "routes": {
+            "authentication.js": {
+                "login": "done",
+                "signup": "done",
+                "getuser": "done"
+            },
+            "notes.js": {
+                "getAllNotes": "done",
+                "addNote" : "done",
+                "updatenote" : "done",
+                "deletenote" : "done",
+                "getNotesWithTag" : "done",
+                "getTags" : "done"
+            }
+        }
+    }
+}
