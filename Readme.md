@@ -1,3 +1,6 @@
+***Note:***
+Switch to branch myspace-js for javascript codebase. The default branch of this repo has been migrated to typescript.
+***
 # MySpace
 ### Secure Note Taking App with MERN Stack
 **Organize your thoughts and ideas with ease!** This note-taking application allows you to create, manage, and access your personal notes securely. Built with the MERN stack (MongoDB, Express.js, React.js, and Node.js), this app offers a user-friendly interface and robust features to keep your notes organized and accessible.
