@@ -14,7 +14,7 @@ export interface AddNoteParams {
 }
 
 export interface EditNoteParams {
-  id: string;
+  id?: string;
   etitle: string;
   edescription: string;
   etag: string;
